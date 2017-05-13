@@ -1,14 +1,13 @@
 import re
 import os
 import sys
+import requests
 import threading
 from urllib import request
-path = os.path.join(os.path.dirname(__file__),'requests')
-sys.path.append(path)
 
 '''
 Name: This is film torrnet spider
-Python: 3.5.2
+Python: 3.5
 '''
 
 __author__ = 'demon'
@@ -81,15 +80,18 @@ class BtTorrent(object):                                          #用于查找�
             if search in line:
                 torrent_url  = line.split('<--->')[1].strip()
                 torrent_name = line.split('<--->')[2].strip()
-
-        data = requests.get(torrent_url,stream=True,headers=self.header)
-        if data.ok:                                                 #下载bt种子
-            print('正在准备下载电影BT种子，稍等一会我的哥~~~')
-            with open(torrent_name,'wb+') as f:
-                f.write(data.content)
-            print('\033[32m%s电影种子下载完毕..~~~~\033[0m'%torrent_name)
+                data = requests.get(torrent_url,stream=True,headers=self.header)
+                if data.ok:                                                 #下载bt种子
+                    print('正在准备下载电影BT种子，稍等一会我的哥~~~')
+                    with open(torrent_name,'wb+') as f:
+                        f.write(data.content)
+                    print('\033[32m%s电影种子下载完毕..~~~~\033[0m'%torrent_name)
+                    break
+                else:
+                    print('\033[31mWTF，请求头挂了...~~~\033[0m')
+                    break
         else:
-            print('\033[31mWTF，请求头挂了...~~~\033[0m')
+            print('\033[31mLow B哥,木有找到心爱的小电影哦\033[0m~')
 
 
 class ChoiceCommand(object):                                        #通过sys.argv传递进来的command调用不同的类方法，update,search,download...
