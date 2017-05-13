@@ -38,9 +38,9 @@ Low B小哥哥：
 
 示例：
 
-	update    起始更新页　终止更新页
-	search    电影名称
-	download  电影名称
+	update    1　10
+	search    速度与激情8
+	download  速度与激情8
 
 作者:
 
